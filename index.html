@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="FitAI">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3012/3012423.png">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,35 +20,36 @@
         body { 
             font-family: 'Inter', sans-serif; 
             overscroll-behavior-y: contain;
+            -webkit-tap-highlight-color: transparent;
         }
         .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
         .min-h-screen { min-height: 100vh; min-height: -webkit-fill-available; }
         input, select, button { font-size: 16px !important; }
     </style>
-    <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "@google/genai": "https://esm.sh/@google/genai@1.3.0",
-    "recharts": "https://esm.sh/recharts@2.15.0",
+    "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "vite": "https://esm.sh/vite@^7.3.0"
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
     <div id="root"></div>
-    <!-- ESTA LÍNEA ES LA QUE FALTABA PARA QUE LA APP CARGUE -->
-    <script type="module" src="./index.tsx"></script>
+    <!-- Punto de entrada para Vite -->
+    <script type="module" src="/index.tsx"></script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW failed:', err));
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('SW registrado'))
+            .catch(err => console.log('Error SW:', err));
         });
       }
     </script>

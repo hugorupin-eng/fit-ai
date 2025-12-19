@@ -1,12 +1,26 @@
 
-const CACHE_NAME = 'fitai-v1';
-// No cacheamos activamente para evitar problemas con la API de Gemini que requiere red,
-// pero el archivo es necesario para que el navegador considere la app como PWA.
+const CACHE_NAME = 'fitai-cache-v1';
+
 self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(['/']);
+    })
+  );
   self.skipWaiting();
 });
 
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
 self.addEventListener('fetch', (event) => {
-  // Pass-through
-  event.respondWith(fetch(event.request));
+  // Solo cacheamos la navegación básica, dejamos que el resto sea red (para la API)
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/'))
+    );
+  } else {
+    event.respondWith(fetch(event.request));
+  }
 });
