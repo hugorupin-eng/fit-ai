@@ -1,14 +1,12 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { UserProfile, LogEntry, ActivityLevel, Goal } from "./types";
+import { UserProfile, LogEntry, ActivityLevel, Goal } from "./types.ts";
 
-// Inicialización de GoogleGenAI con la API KEY del entorno
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const calculateTDEE = (profile: UserProfile): number => {
   const { weight, height, age, gender, activityLevel, goal } = profile;
   
-  // Ecuación de Mifflin-St Jeor
   let bmr = (10 * weight) + (6.25 * height) - (5 * age);
   if (gender === 'male') bmr += 5;
   else bmr -= 161;
@@ -38,20 +36,9 @@ export const processChatMessage = async (text: string, profile: UserProfile): Pr
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
-      contents: `Mensaje del usuario: "${text}"
-      Perfil del usuario: ${JSON.stringify(profile)}`,
+      contents: `Mensaje: "${text}" | Perfil: ${JSON.stringify(profile)}`,
       config: {
-        systemInstruction: `Eres FitPulse AI, un experto en nutrición y fitness. 
-        Tu misión es analizar el mensaje del usuario y:
-        1. Extraer datos estructurados si el usuario informa de una comida, ejercicio o sueño.
-        2. Proporcionar una respuesta amable y experta.
-        
-        REGLAS DE EXTRACCIÓN:
-        - Si es comida: Estima calorías, proteínas, carbohidratos y grasas (Gramos).
-        - Si es ejercicio: Calcula calorías quemadas según el peso del usuario (${profile.weight}kg), el tipo de ejercicio e intensidad. Incluye la duración en durationMinutes.
-        - Si es sueño: Extrae las horas.
-        
-        Si detectas cualquier dato que deba registrarse, SIEMPRE incluye el objeto logData en tu respuesta JSON.`,
+        systemInstruction: `Eres FitPulse AI. Extrae datos de comida, ejercicio (calorías quemadas según peso ${profile.weight}kg) o sueño. Responde SIEMPRE en JSON.`,
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
@@ -79,7 +66,7 @@ export const processChatMessage = async (text: string, profile: UserProfile): Pr
 
     return JSON.parse(response.text) as AIChatResponse;
   } catch (error) {
-    console.error("Failed to process chat with AI:", error);
+    console.error("AI Error:", error);
     return null;
   }
 };
@@ -88,15 +75,13 @@ export const getWeeklyAdvice = async (history: LogEntry[], profile: UserProfile)
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
-      contents: `Analiza el progreso:
-      Perfil: ${JSON.stringify(profile)}
-      Historial: ${JSON.stringify(history.slice(-20))}`,
+      contents: `Análisis: ${JSON.stringify(history.slice(-10))}`,
       config: {
-        systemInstruction: "Eres un coach experto. Analiza el balance calórico y la calidad del descanso. Da un consejo breve y potente (máx 2 frases) para la semana."
+        systemInstruction: "Da un consejo de fitness de 1 frase basado en los datos."
       }
     });
     return response.text;
   } catch (error) {
-    return "¡Sigue así! Tu constancia es la clave del éxito.";
+    return "¡Sigue adelante con tu progreso!";
   }
 };

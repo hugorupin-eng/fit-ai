@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import { UserProfile, LogEntry } from './types';
-import ProfileSetup from './components/ProfileSetup';
-import Dashboard from './components/Dashboard';
-import ChatInterface from './components/ChatInterface';
-import SummaryView from './components/SummaryView';
-import InstallPrompt from './components/InstallPrompt';
-import { calculateTDEE } from './geminiService';
+import { UserProfile, LogEntry } from './types.ts';
+import ProfileSetup from './components/ProfileSetup.tsx';
+import Dashboard from './components/Dashboard.tsx';
+import ChatInterface from './components/ChatInterface.tsx';
+import SummaryView from './components/SummaryView.tsx';
+import InstallPrompt from './components/InstallPrompt.tsx';
+import { calculateTDEE } from './geminiService.ts';
 
 const Logo = () => (
   <div className="flex items-center gap-2.5">
@@ -25,13 +25,23 @@ const Logo = () => (
 
 const App: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(() => {
-    const saved = localStorage.getItem('fitai_profile');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('fitai_profile');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      console.error("Error al cargar perfil", e);
+      return null;
+    }
   });
 
   const [logs, setLogs] = useState<LogEntry[]>(() => {
-    const saved = localStorage.getItem('fitai_logs');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('fitai_logs');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Error al cargar logs", e);
+      return [];
+    }
   });
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
