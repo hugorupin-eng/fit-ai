@@ -10,7 +10,7 @@ interface Props {
 }
 
 const SummaryView: React.FC<Props> = ({ logs, profile }) => {
-  const [advice, setAdvice] = useState('Generating your personalized advice...');
+  const [advice, setAdvice] = useState('Generando tus consejos personalizados...');
   const [timeframe, setTimeframe] = useState<'week' | 'month'>('week');
 
   const historyData = useMemo(() => {
@@ -59,13 +59,13 @@ const SummaryView: React.FC<Props> = ({ logs, profile }) => {
           onClick={() => setTimeframe('week')}
           className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${timeframe === 'week' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700'}`}
         >
-          Weekly
+          Semanal
         </button>
         <button 
           onClick={() => setTimeframe('month')}
           className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${timeframe === 'month' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700'}`}
         >
-          Monthly
+          Mensual
         </button>
       </div>
 
@@ -75,14 +75,14 @@ const SummaryView: React.FC<Props> = ({ logs, profile }) => {
           <div className="p-2 bg-white/20 rounded-lg">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
           </div>
-          <h3 className="font-bold">Coach's Insight</h3>
+          <h3 className="font-bold">Consejo de tu Coach AI</h3>
         </div>
         <p className="text-indigo-100 text-sm leading-relaxed">{advice}</p>
       </div>
 
       {/* Calories Chart */}
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-        <h3 className="text-slate-900 font-bold mb-6">Calorie Trends</h3>
+        <h3 className="text-slate-900 font-bold mb-6">Tendencia de Calorías</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={historyData}>
@@ -101,7 +101,7 @@ const SummaryView: React.FC<Props> = ({ logs, profile }) => {
 
       {/* Sleep Chart */}
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-        <h3 className="text-slate-900 font-bold mb-6">Sleep Regularity</h3>
+        <h3 className="text-slate-900 font-bold mb-6">Regularidad del Sueño</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={historyData}>

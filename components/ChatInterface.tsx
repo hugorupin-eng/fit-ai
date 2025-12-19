@@ -9,7 +9,7 @@ interface Props {
 
 const ChatInterface: React.FC<Props> = ({ onLogAdded }) => {
   const [messages, setMessages] = useState<{ role: 'user' | 'ai', content: string }[]>([
-    { role: 'ai', content: "Hi! Tell me what you ate or how long you slept, and I'll log it for you. For example: 'I had a bowl of oatmeal with blueberries' or 'Slept 7.5 hours'." }
+    { role: 'ai', content: "¡Hola! Cuéntame qué has comido o cuántas horas has dormido y lo anotaré por ti. Por ejemplo: 'He desayunado un tazón de avena con arándanos' o 'He dormido 7.5 horas'." }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -46,13 +46,13 @@ const ChatInterface: React.FC<Props> = ({ onLogAdded }) => {
 
       let responseText = '';
       if (newLog.type === 'meal') {
-        responseText = `Got it! Logged: ${newLog.description} (${newLog.calories} kcal). Your macros are updated!`;
+        responseText = `¡Entendido! Registrado: ${newLog.description} (${newLog.calories} kcal). ¡Tus macros se han actualizado!`;
       } else {
-        responseText = `Logged ${newLog.sleepHours} hours of sleep. Resting is key!`;
+        responseText = `He registrado ${newLog.sleepHours} horas de sueño. ¡Descansar es clave!`;
       }
       setMessages(prev => [...prev, { role: 'ai', content: responseText }]);
     } else {
-      setMessages(prev => [...prev, { role: 'ai', content: "I couldn't quite catch the details. Try specifying the food or sleep duration more clearly!" }]);
+      setMessages(prev => [...prev, { role: 'ai', content: "No he podido captar los detalles. ¡Intenta especificar mejor la comida o la duración del sueño!" }]);
     }
     setIsTyping(false);
   };
@@ -87,7 +87,7 @@ const ChatInterface: React.FC<Props> = ({ onLogAdded }) => {
           <input 
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder="Talk to FitAI..."
+            placeholder="Escribe a FitAI..."
             className="w-full pl-4 pr-12 py-3 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all"
           />
           <button 

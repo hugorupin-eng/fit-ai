@@ -26,9 +26,9 @@ const Dashboard: React.FC<Props> = ({ profile, logs }) => {
   }, [todayLogs]);
 
   const macroData = [
-    { name: 'Protein', value: stats.protein, color: '#6366f1' },
-    { name: 'Carbs', value: stats.carbs, color: '#10b981' },
-    { name: 'Fats', value: stats.fats, color: '#f59e0b' }
+    { name: 'Proteína', value: stats.protein, color: '#6366f1' },
+    { name: 'Carbos', value: stats.carbs, color: '#10b981' },
+    { name: 'Grasas', value: stats.fats, color: '#f59e0b' }
   ];
 
   const calPercentage = Math.min(100, Math.round((stats.calories / (profile.targetCalories || 2000)) * 100));
@@ -39,7 +39,7 @@ const Dashboard: React.FC<Props> = ({ profile, logs }) => {
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <h3 className="text-slate-500 text-sm font-medium">Daily Calories</h3>
+            <h3 className="text-slate-500 text-sm font-medium">Calorías Diarias</h3>
             <p className="text-3xl font-bold text-slate-900">{stats.calories} / {profile.targetCalories} <span className="text-xs text-slate-400 font-normal">kcal</span></p>
           </div>
           <div className="bg-indigo-50 text-indigo-600 p-2 rounded-xl">
@@ -57,7 +57,7 @@ const Dashboard: React.FC<Props> = ({ profile, logs }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Macros Breakdown */}
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-          <h3 className="text-slate-900 font-bold mb-4">Macros Breakdown</h3>
+          <h3 className="text-slate-900 font-bold mb-4">Desglose de Macros</h3>
           <div className="flex items-center justify-between">
             <div className="w-1/2 h-40">
               <ResponsiveContainer width="100%" height="100%">
@@ -93,23 +93,23 @@ const Dashboard: React.FC<Props> = ({ profile, logs }) => {
         {/* Sleep Card */}
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-slate-900 font-bold">Sleep Quality</h3>
+            <h3 className="text-slate-900 font-bold">Calidad de Sueño</h3>
             <div className="bg-blue-50 text-blue-600 p-2 rounded-xl">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
             </div>
           </div>
           <div className="text-center">
             <p className="text-5xl font-bold text-slate-900">{stats.sleep}</p>
-            <p className="text-slate-500 text-sm mt-1">Hours tracked today</p>
+            <p className="text-slate-500 text-sm mt-1">Horas registradas hoy</p>
           </div>
           <div className="mt-6 pt-6 border-t border-slate-50 flex justify-between">
             <div className="text-center flex-1">
-              <p className="text-xs text-slate-400">Target</p>
+              <p className="text-xs text-slate-400">Objetivo</p>
               <p className="font-semibold">8.0h</p>
             </div>
             <div className="text-center flex-1 border-l border-slate-50">
-              <p className="text-xs text-slate-400">Rest</p>
-              <p className="font-semibold text-green-500">Good</p>
+              <p className="text-xs text-slate-400">Descanso</p>
+              <p className="font-semibold text-green-500">Bueno</p>
             </div>
           </div>
         </div>
@@ -117,9 +117,9 @@ const Dashboard: React.FC<Props> = ({ profile, logs }) => {
 
       {/* Recent Activity List */}
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-        <h3 className="text-slate-900 font-bold mb-4">Today's Logs</h3>
+        <h3 className="text-slate-900 font-bold mb-4">Registros de Hoy</h3>
         {todayLogs.length === 0 ? (
-          <p className="text-slate-400 text-sm py-4 italic">No logs yet today. Talk to FitAI to add some!</p>
+          <p className="text-slate-400 text-sm py-4 italic">No hay registros hoy. ¡Habla con FitAI para añadir algo!</p>
         ) : (
           <div className="space-y-4">
             {todayLogs.map(log => (
@@ -134,7 +134,7 @@ const Dashboard: React.FC<Props> = ({ profile, logs }) => {
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-slate-900">{log.description}</p>
                   <p className="text-xs text-slate-500">
-                    {log.type === 'meal' ? `${log.calories} kcal • P:${log.protein}g C:${log.carbs}g F:${log.fats}g` : `${log.sleepHours} hours recorded`}
+                    {log.type === 'meal' ? `${log.calories} kcal • P:${log.protein}g C:${log.carbs}g G:${log.fats}g` : `${log.sleepHours} horas registradas`}
                   </p>
                 </div>
               </div>

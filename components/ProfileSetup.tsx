@@ -23,45 +23,45 @@ const ProfileSetup: React.FC<Props> = ({ onSubmit }) => {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
-        <h2 className="text-3xl font-bold text-slate-900 mb-2">Build your Plan</h2>
-        <p className="text-slate-500 mb-8">Let's calculate your personalized caloric goals.</p>
+        <h2 className="text-3xl font-bold text-slate-900 mb-2">Crea tu Plan</h2>
+        <p className="text-slate-500 mb-8">Calcularemos tus objetivos calóricos personalizados.</p>
         
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1">Name</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-1">Nombre</label>
             <input 
               required
               className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-              placeholder="e.g. John Doe"
+              placeholder="Ej. Juan Pérez"
               onChange={e => setFormData({ ...formData, name: e.target.value })}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">Age</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Edad</label>
               <input 
                 required type="number"
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
-                placeholder="Years"
+                placeholder="Años"
                 onChange={e => setFormData({ ...formData, age: Number(e.target.value) })}
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">Gender</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Género</label>
               <select 
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
                 onChange={e => setFormData({ ...formData, gender: e.target.value as any })}
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="male">Hombre</option>
+                <option value="female">Mujer</option>
               </select>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">Weight (kg)</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Peso (kg)</label>
               <input 
                 required type="number"
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
@@ -70,7 +70,7 @@ const ProfileSetup: React.FC<Props> = ({ onSubmit }) => {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">Height (cm)</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Altura (cm)</label>
               <input 
                 required type="number"
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
@@ -81,26 +81,26 @@ const ProfileSetup: React.FC<Props> = ({ onSubmit }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1">Activity Level</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-1">Nivel de Actividad</label>
             <select 
               className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
               onChange={e => setFormData({ ...formData, activityLevel: e.target.value as ActivityLevel })}
             >
-              <option value={ActivityLevel.SEDENTARY}>Sedentary (Office job)</option>
-              <option value={ActivityLevel.LIGHT}>Lightly Active</option>
-              <option value={ActivityLevel.MODERATE}>Moderately Active</option>
-              <option value={ActivityLevel.ACTIVE}>Very Active</option>
-              <option value={ActivityLevel.VERY_ACTIVE}>Extra Active</option>
+              <option value={ActivityLevel.SEDENTARY}>Sedentario (Oficina)</option>
+              <option value={ActivityLevel.LIGHT}>Ligera (1-2 días/semana)</option>
+              <option value={ActivityLevel.MODERATE}>Moderada (3-5 días/semana)</option>
+              <option value={ActivityLevel.ACTIVE}>Activa (6-7 días/semana)</option>
+              <option value={ActivityLevel.VERY_ACTIVE}>Muy Activa (Atleta)</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1">Your Goal</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-1">Tu Objetivo</label>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { id: Goal.LOSE_WEIGHT, label: 'Lose' },
-                { id: Goal.MAINTAIN, label: 'Maintain' },
-                { id: Goal.GAIN_WEIGHT, label: 'Gain' }
+                { id: Goal.LOSE_WEIGHT, label: 'Perder' },
+                { id: Goal.MAINTAIN, label: 'Mantener' },
+                { id: Goal.GAIN_WEIGHT, label: 'Ganar' }
               ].map(g => (
                 <button
                   key={g.id}
@@ -118,7 +118,7 @@ const ProfileSetup: React.FC<Props> = ({ onSubmit }) => {
             type="submit"
             className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all active:scale-95"
           >
-            Generate My Plan
+            Generar mi Plan
           </button>
         </form>
       </div>
