@@ -1,0 +1,5 @@
+{
+  "name": "FitAI Coach",
+  "description": "An intelligent fitness and nutrition tracker that uses AI to log meals, sleep, and macros, while providing personalized caloric goals and detailed progress summaries.",
+  "requestFramePermissions": []
+}
