@@ -32,16 +32,18 @@ export interface LogEntry {
   date: string; // ISO string
   type: 'meal' | 'sleep' | 'activity';
   description: string;
-  calories?: number;
+  calories?: number; // For meals: positive, For activity: positive (burned)
   protein?: number;
   carbs?: number;
   fats?: number;
   sleepHours?: number;
+  durationMinutes?: number;
 }
 
 export interface DaySummary {
   date: string;
   totalCalories: number;
+  totalBurned: number;
   totalProtein: number;
   totalCarbs: number;
   totalFats: number;

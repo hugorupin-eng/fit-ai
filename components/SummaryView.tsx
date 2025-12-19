@@ -21,9 +21,11 @@ const SummaryView: React.FC<Props> = ({ logs, profile }) => {
       const d = new Date();
       d.setDate(d.getDate() - i);
       const dateStr = d.toISOString().split('T')[0];
+      // Fix: Added missing totalBurned property to satisfy DaySummary interface
       days[dateStr] = {
         date: dateStr,
         totalCalories: 0,
+        totalBurned: 0,
         totalProtein: 0,
         totalCarbs: 0,
         totalFats: 0,
@@ -34,11 +36,17 @@ const SummaryView: React.FC<Props> = ({ logs, profile }) => {
     logs.forEach(log => {
       const dateStr = log.date.split('T')[0];
       if (days[dateStr]) {
-        days[dateStr].totalCalories += log.calories || 0;
-        days[dateStr].totalProtein += log.protein || 0;
-        days[dateStr].totalCarbs += log.carbs || 0;
-        days[dateStr].totalFats += log.fats || 0;
-        days[dateStr].totalSleep += log.sleepHours || 0;
+        // Fix: Correctly categorize logs into their respective summaries
+        if (log.type === 'meal') {
+          days[dateStr].totalCalories += log.calories || 0;
+          days[dateStr].totalProtein += log.protein || 0;
+          days[dateStr].totalCarbs += log.carbs || 0;
+          days[dateStr].totalFats += log.fats || 0;
+        } else if (log.type === 'activity') {
+          days[dateStr].totalBurned += log.calories || 0;
+        } else if (log.type === 'sleep') {
+          days[dateStr].totalSleep += log.sleepHours || 0;
+        }
       }
     });
 
