@@ -10,7 +10,7 @@ interface Props {
 }
 
 const SummaryView: React.FC<Props> = ({ logs, profile }) => {
-  const [advice, setAdvice] = useState('Generando tus consejos personalizados...');
+  const [advice, setAdvice] = useState('Analizando tu progreso...');
   const [timeframe, setTimeframe] = useState<'week' | 'month'>('week');
 
   const historyData = useMemo(() => {
@@ -52,64 +52,63 @@ const SummaryView: React.FC<Props> = ({ logs, profile }) => {
     getWeeklyAdvice(logs, profile).then(setAdvice);
   }, [logs, profile]);
 
+  const isDark = document.documentElement.classList.contains('dark');
+
   return (
     <div className="space-y-6">
-      <div className="flex bg-slate-100 p-1 rounded-2xl w-fit">
+      <div className="flex bg-slate-100 dark:bg-slate-900 p-1.5 rounded-2xl w-fit border dark:border-slate-800">
         <button 
           onClick={() => setTimeframe('week')}
-          className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${timeframe === 'week' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700'}`}
+          className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${timeframe === 'week' ? 'bg-white dark:bg-slate-800 shadow-sm text-indigo-600 dark:text-indigo-400' : 'text-slate-500 hover:text-slate-700'}`}
         >
-          Semanal
+          Semana
         </button>
         <button 
           onClick={() => setTimeframe('month')}
-          className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${timeframe === 'month' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700'}`}
+          className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${timeframe === 'month' ? 'bg-white dark:bg-slate-800 shadow-sm text-indigo-600 dark:text-indigo-400' : 'text-slate-500 hover:text-slate-700'}`}
         >
-          Mensual
+          Mes
         </button>
       </div>
 
-      {/* AI Advice */}
-      <div className="bg-indigo-600 rounded-3xl p-6 text-white shadow-lg shadow-indigo-200">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="p-2 bg-white/20 rounded-lg">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+      <div className="bg-gradient-to-br from-indigo-600 to-indigo-800 dark:from-indigo-500 dark:to-indigo-700 rounded-3xl p-6 text-white shadow-xl shadow-indigo-200 dark:shadow-none">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2.5 bg-white/20 backdrop-blur-md rounded-2xl">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
           </div>
-          <h3 className="font-bold">Consejo de tu Coach AI</h3>
+          <h3 className="font-black text-lg tracking-tight">Análisis Inteligente</h3>
         </div>
-        <p className="text-indigo-100 text-sm leading-relaxed">{advice}</p>
+        <p className="text-indigo-50 text-sm leading-relaxed font-medium">{advice}</p>
       </div>
 
-      {/* Calories Chart */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-        <h3 className="text-slate-900 font-bold mb-6">Tendencia de Calorías</h3>
-        <div className="h-64">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 transition-theme">
+        <h3 className="text-slate-900 dark:text-white font-bold mb-6">Tendencia de Calorías</h3>
+        <div className="h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={historyData}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis dataKey="shortDate" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
-              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? "#1e293b" : "#f1f5f9"} />
+              <XAxis dataKey="shortDate" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: isDark ? '#64748b' : '#94a3b8', fontWeight: 700 }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: isDark ? '#64748b' : '#94a3b8', fontWeight: 700 }} />
               <Tooltip 
-                contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
-                cursor={{ fill: '#f8fafc' }}
+                contentStyle={{ borderRadius: '20px', backgroundColor: isDark ? '#0f172a' : '#fff', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}
+                itemStyle={{ fontSize: '12px', fontWeight: '700' }}
               />
-              <Bar dataKey="totalCalories" fill="#6366f1" radius={[4, 4, 0, 0]} barSize={20} />
+              <Bar dataKey="totalCalories" fill="#6366f1" radius={[6, 6, 0, 0]} barSize={24} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* Sleep Chart */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-        <h3 className="text-slate-900 font-bold mb-6">Regularidad del Sueño</h3>
-        <div className="h-64">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 transition-theme">
+        <h3 className="text-slate-900 dark:text-white font-bold mb-6">Consistencia de Sueño</h3>
+        <div className="h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={historyData}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis dataKey="shortDate" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
-              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
-              <Tooltip contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }} />
-              <Line type="monotone" dataKey="totalSleep" stroke="#3b82f6" strokeWidth={3} dot={{ fill: '#3b82f6', r: 4 }} />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? "#1e293b" : "#f1f5f9"} />
+              <XAxis dataKey="shortDate" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: isDark ? '#64748b' : '#94a3b8', fontWeight: 700 }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: isDark ? '#64748b' : '#94a3b8', fontWeight: 700 }} />
+              <Tooltip contentStyle={{ borderRadius: '20px', backgroundColor: isDark ? '#0f172a' : '#fff', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }} />
+              <Line type="monotone" dataKey="totalSleep" stroke="#3b82f6" strokeWidth={4} dot={{ fill: '#3b82f6', r: 5, strokeWidth: 2, stroke: '#fff' }} activeDot={{ r: 8 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
